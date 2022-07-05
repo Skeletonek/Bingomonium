@@ -1,9 +1,5 @@
-Project/debug
-Project/release
-build-PandemoniumBingo-Desktop-Debug
-build-PandemoniumBingo-Desktop-Release
-build-PandemoniumBingo-Desktop-Profile
-build-PandemoniumBingo-Desktop-Qt6
-build-PandemoniumBingo-Qt5-Debug
-Project/PandemoniumBingo.pro.user
+build-Bingomonium-Desktop-Debug
+build-Bingomonium-Desktop-Release
+build-Bingomonium-Desktop-Profile
+Project/Bingomonium.pro.user
 *.user
