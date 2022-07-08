@@ -10,8 +10,7 @@
 
 using namespace std;
 
-class BingoFileParser
-{
+class BingoFileParser {
 public:
     BingoFileParser();
 

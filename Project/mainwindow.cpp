@@ -5,12 +5,10 @@ BingoFileParser bingoFileParser;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+    , ui(new Ui::MainWindow) {
     allBingos = bingoFileParser.getAllFiles();
     QStringListModel* model = new QStringListModel(this);
-    QStringList list;
-    for(string vectorString : allBingos){
+    for(string vectorString : allBingos) {
         QString text = QString::fromStdString(vectorString);
         list << text;
     }
@@ -19,20 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listView->setModel(model);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    bingoDialog = new Bingo(this);
-    bingoDialog->show();
-}
-
-
-void MainWindow::on_listView_clicked(const QModelIndex &index)
-{
+void MainWindow::on_listView_clicked(const QModelIndex &index) {
     bingoDialog = new Bingo(this);
     bingoDialog->show();
 }

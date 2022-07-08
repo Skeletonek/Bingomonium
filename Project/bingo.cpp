@@ -8,7 +8,7 @@ BingoFileParser bingoFileParse;
 
 Bingo::Bingo(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Bingo){
+    ui(new Ui::Bingo) {
     bingoFileParse.readFile("bingos/CSGOBingoDB.txt");
     bingoValues = bingoFileParse.getValuesData();
     createBingo();
@@ -18,14 +18,14 @@ Bingo::Bingo(QWidget *parent) :
     //wordWrapQLabel(); Method broken: Don't use
 }
 
-Bingo::~Bingo(){
+Bingo::~Bingo() {
     delete ui;
 }
 
-void Bingo::on_Bingo_destroyed(){
+void Bingo::on_Bingo_destroyed() {
 }
 
-void Bingo::wordWrapQLabel(QString str, int btnIndex){
+void Bingo::wordWrapQLabel(QString str, int btnIndex) {
     auto label = new QLabel(str, btnArr[btnIndex]);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignHCenter);
@@ -34,7 +34,7 @@ void Bingo::wordWrapQLabel(QString str, int btnIndex){
     label->setStyleSheet("background-color: none;");
 }
 
-void Bingo::createBingo(){
+void Bingo::createBingo() {
     int random;
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
@@ -48,7 +48,7 @@ void Bingo::createBingo(){
     }
 }
 
-void Bingo::constructButtons(){
+void Bingo::constructButtons() {
     buttons = ui->buttonsGrid->children();
     btnArr[0] = ui->pushButton11;
     btnArr[1] = ui->pushButton12;
@@ -77,10 +77,10 @@ void Bingo::constructButtons(){
     btnArr[24] = ui->pushButton55;
 }
 
-void Bingo::fillInButtons(){
+void Bingo::fillInButtons() {
     int k = 0;
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
+    for(int i = 0; i < 5; i++) {
+        for(int j = 0; j < 5; j++) {
             wordWrapQLabel(QString::fromStdString(bingoText[i][j]), k);
             //btnArr[k]->setText(QString::fromStdString(bingoText[i][j]));
             k++;
@@ -88,106 +88,106 @@ void Bingo::fillInButtons(){
     }
 }
 
-int Bingo::checkBingo(){
+int Bingo::checkBingo() {
         int bingoCount = 0;
         bool bingoCheck;
 
-        for(int x = 0; x < 5; x++){ //Horizontal Check
+        for(int x = 0; x < 5; x++) { //Horizontal Check
             bingoCheck = true;
-            for (int y = 0; y < 5; y++){
-                if(!bingo[x][y]){
+            for (int y = 0; y < 5; y++) {
+                if(!bingo[x][y]) {
                     bingoCheck = false;
                     break;
                 }
             }
-            if(bingoCheck){
+            if(bingoCheck) {
                 bingoCount++;
             }
         }
 
-        for(int x = 0; x < 5; x++){ //Vertical Check
+        for(int x = 0; x < 5; x++) { //Vertical Check
             bingoCheck = true;
-            for (int y = 0; y < 5; y++){
-                if(!bingo[y][x]){
+            for (int y = 0; y < 5; y++) {
+                if(!bingo[y][x]) {
                     bingoCheck = false;
                     break;
                 }
             }
-            if(bingoCheck){
+            if(bingoCheck) {
                 bingoCount++;
             }
         }
 
-        if (bingo[2][2]){ //Diagonal check
+        if (bingo[2][2]) { //Diagonal check
             bingoCheck = true;
-            for (int z = 0; z < 5; z++){ // Top left diagonal
-                if (!bingo[z][z]){
+            for (int z = 0; z < 5; z++) { // Top left diagonal
+                if (!bingo[z][z]) {
                     bingoCheck = false;
                     break;
                 }
             }
-            if (bingoCheck){
+            if (bingoCheck) {
                 bingoCount++;
             }
             bingoCheck = true;
-            for (int z = 0; z < 5; z++){ // Top right diagonal
-                if (!bingo[z][5 - 1 - z]){
+            for (int z = 0; z < 5; z++) { // Top right diagonal
+                if (!bingo[z][5 - 1 - z]) {
                     bingoCheck = false;
                     break;
                 }
             }
-            if (bingoCheck){
+            if (bingoCheck) {
                 bingoCount++;
             }
         }
         return bingoCheck;
     }
 
-void Bingo::onPushButtonClicked(){
+void Bingo::onPushButtonClicked() {
     int indexx = 0; int indexy = 0;
 
-    for(QPushButton* btn : btnArr){
-        if(btn == sender()){
-            if(!bingo[indexx][indexy]){
+    for(QPushButton* btn : btnArr) {
+        if(btn == sender()) {
+            if(!bingo[indexx][indexy]) {
                 btn->setStyleSheet("background-color: red;");
                 bingo[indexx][indexy] = true;
             }
-            else{
+            else {
                 btn->setStyleSheet("background-color: none;");
                 bingo[indexx][indexy] = false;
             }
         }
         indexy++;
-        if(indexy > 4){
+        if(indexy > 4) {
             indexy = 0;
             indexx++;
         }
     }
 }
 
-void Bingo::on_pushButton11_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton12_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton13_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton14_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton15_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton21_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton22_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton23_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton24_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton25_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton31_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton32_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton33_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton34_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton35_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton41_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton42_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton43_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton44_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton45_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton51_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton52_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton53_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton54_clicked(){onPushButtonClicked();}
-void Bingo::on_pushButton55_clicked(){onPushButtonClicked();}
+void Bingo::on_pushButton11_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton12_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton13_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton14_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton15_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton21_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton22_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton23_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton24_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton25_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton31_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton32_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton33_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton34_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton35_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton41_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton42_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton43_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton44_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton45_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton51_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton52_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton53_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton54_clicked() { onPushButtonClicked(); }
+void Bingo::on_pushButton55_clicked() { onPushButtonClicked(); }
 

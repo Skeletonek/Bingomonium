@@ -10,8 +10,7 @@ namespace Ui {
 class Bingo;
 }
 
-class Bingo : public QDialog
-{
+class Bingo : public QDialog {
     Q_OBJECT
 
 public:
