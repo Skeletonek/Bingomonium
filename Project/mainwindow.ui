@@ -29,6 +29,9 @@
    <iconset resource="QtResourceFile.qrc">
     <normaloff>:/icons/logo.xpm</normaloff>:/icons/logo.xpm</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_2">
     <property name="geometry">

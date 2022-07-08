@@ -39,7 +39,7 @@ DISTFILES += \
 RESOURCES += \
     QtResourceFile.qrc
 
-copydata.commands = $(COPY_DIR) $$PWD/bingos $$OUT_PWD
+copydata.commands = $(COPY_DIR) $$shell_path($$PWD/bingos) $$shell_path($$OUT_PWD)
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)

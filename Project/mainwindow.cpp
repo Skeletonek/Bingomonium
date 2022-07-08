@@ -6,6 +6,7 @@ BingoFileParser bingoFileParser;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
+
     allBingos = bingoFileParser.getAllFiles();
     QStringListModel* model = new QStringListModel(this);
     for(string vectorString : allBingos) {

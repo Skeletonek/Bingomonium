@@ -3,10 +3,16 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QSysInfo>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    if(QSysInfo::productType().toStdString() == "windows") {
+        a.setStyleSheet("QDialog { background-color: rgb(32, 32, 32); color: rgb(230, 230, 230); }"
+                        "QMainWindow { background-color: rgb(32, 32, 32); color: rgb(230, 230, 230); }");
+    }
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
