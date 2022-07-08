@@ -18,11 +18,16 @@ public:
     ~Bingo();
     int bingoID;
 
+    void setBingoFilePath(string bingoFilePath_Value);
+
+    void onCreate();
+
 private:
     Ui::Bingo *ui;
 
     bool bingo[5][5];
     string bingoText[5][5];
+    string bingoFilePath;
     QPushButton *btnArr[25];
     QObjectList buttons;
     vector<string> bingoCategories;

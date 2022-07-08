@@ -9,27 +9,28 @@ BingoFileParser bingoFileParse;
 Bingo::Bingo(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Bingo) {
-    bingoFileParse.readFile("bingos/CSGOBingoDB.txt");
+    ui->setupUi(this);
+}
+
+Bingo::~Bingo() { delete ui; }
+
+void Bingo::onCreate() {
+    bingoFileParse.readFile(bingoFilePath);
     bingoValues = bingoFileParse.getValuesData();
     createBingo();
-    ui->setupUi(this);
     constructButtons();
     fillInButtons();
-    //wordWrapQLabel(); Method broken: Don't use
 }
 
-Bingo::~Bingo() {
-    delete ui;
-}
+void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
 
-void Bingo::on_Bingo_destroyed() {
-}
+void Bingo::on_Bingo_destroyed() { }
 
 void Bingo::wordWrapQLabel(QString str, int btnIndex) {
     auto label = new QLabel(str, btnArr[btnIndex]);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignHCenter);
-    label->setGeometry(0, 0, 105, 100); //Find out how to get buttons size
+    label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
     label->setMargin(8);
     label->setStyleSheet("background-color: none;");
 }
@@ -82,7 +83,6 @@ void Bingo::fillInButtons() {
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
             wordWrapQLabel(QString::fromStdString(bingoText[i][j]), k);
-            //btnArr[k]->setText(QString::fromStdString(bingoText[i][j]));
             k++;
         }
     }
