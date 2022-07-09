@@ -3,6 +3,7 @@
 #include "bingofileparser.h"
 #include <QLabel>
 #include <QSizePolicy>
+#include <QSysInfo>
 
 BingoFileParser bingoFileParse;
 
@@ -39,6 +40,7 @@ void Bingo::createBingo() {
     int random;
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
+            bingo[i][j] = false;
             if(bingoValues.size() != 0){
             random = rand()%(bingoValues.size());
             string tile_tmp = bingoValues.at(random);
@@ -153,7 +155,12 @@ void Bingo::onPushButtonClicked() {
                 bingo[indexx][indexy] = true;
             }
             else {
-                btn->setStyleSheet("background-color: none;");
+                if(QSysInfo::productType().toStdString() != "windows") {
+                    btn->setStyleSheet("background-color: none;");
+                }
+                else {
+                    btn->setStyleSheet("background-color: rgb(32, 32, 32);");
+                }
                 bingo[indexx][indexy] = false;
             }
         }
