@@ -142,7 +142,7 @@ int Bingo::checkBingo() {
                 bingoCount++;
             }
         }
-        return bingoCheck;
+        return bingoCount;
     }
 
 void Bingo::onPushButtonClicked() {
@@ -170,6 +170,13 @@ void Bingo::onPushButtonClicked() {
             indexx++;
         }
     }
+    std::ostringstream oss;
+    int bingoCount = checkBingo();
+    oss << "Bingo: " << bingoCount;
+    if(bingoCount > 0)
+        ui->bingoLabel->setText(QString::fromStdString(oss.str()));
+    else
+        ui->bingoLabel->setText("");
 }
 
 void Bingo::on_pushButton11_clicked() { onPushButtonClicked(); }
