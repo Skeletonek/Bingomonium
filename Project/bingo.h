@@ -3,6 +3,11 @@
 
 #include <QDialog>
 #include <map>
+#include <QLabel>
+#include <QSizePolicy>
+#include <QSysInfo>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 using namespace std;
 
@@ -17,6 +22,8 @@ public:
     explicit Bingo(QWidget *parent = nullptr);
     ~Bingo();
     int bingoID;
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
 
     void setBingoFilePath(string bingoFilePath_Value);
 
@@ -25,6 +32,7 @@ public:
 private:
     Ui::Bingo *ui;
 
+    int bingoCount;
     bool bingo[5][5];
     string bingoText[5][5];
     string bingoFilePath;
@@ -33,12 +41,13 @@ private:
     vector<string> bingoCategories;
     vector<string> bingoValues;
 
-    int checkBingo();
-    void createBingo();
-    void fillInButtons();
     void constructButtons();
+    void fillInButtons();
     void wordWrapQLabel(QString str, int btnIndex);
-
+    void createBingo();
+    int checkBingo();
+    void setBingoCountText(int bingoCount_);
+    void playAudio(int bingoCount_);
     void onPushButtonClicked();
 
 private slots:

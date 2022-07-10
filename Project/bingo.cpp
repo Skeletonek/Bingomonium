@@ -1,9 +1,6 @@
 #include "bingo.h"
 #include "ui_bingo.h"
 #include "bingofileparser.h"
-#include <QLabel>
-#include <QSizePolicy>
-#include <QSysInfo>
 
 BingoFileParser bingoFileParse;
 
@@ -21,6 +18,9 @@ void Bingo::onCreate() {
     createBingo();
     constructButtons();
     fillInButtons();
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.25);
+    player->setSource(QUrl("bingos/Ding.wav"));
 }
 
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
@@ -170,13 +170,28 @@ void Bingo::onPushButtonClicked() {
             indexx++;
         }
     }
-    std::ostringstream oss;
-    int bingoCount = checkBingo();
-    oss << "Bingo: " << bingoCount;
-    if(bingoCount > 0)
+
+    int bingoCount_ = checkBingo();
+    setBingoCountText(bingoCount_);
+    playAudio(bingoCount_);
+    bingoCount = bingoCount_;
+}
+
+void Bingo::setBingoCountText(int bingoCount_) {
+    ostringstream oss;
+    oss << "Bingo: " << bingoCount_;
+    if(bingoCount_ > 0)
         ui->bingoLabel->setText(QString::fromStdString(oss.str()));
     else
         ui->bingoLabel->setText("");
+}
+
+void Bingo::playAudio(int bingoCount_) {
+    if(bingoCount < bingoCount_) {
+        if(player->playbackState() == QMediaPlayer::PlayingState)
+            player->stop();
+        player->play();
+    }
 }
 
 void Bingo::on_pushButton11_clicked() { onPushButtonClicked(); }
@@ -204,4 +219,3 @@ void Bingo::on_pushButton52_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton53_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton54_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton55_clicked() { onPushButtonClicked(); }
-
