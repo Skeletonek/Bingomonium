@@ -5,4 +5,7 @@
     <qresource prefix="/img">
         <file>bingomonium_logo.png</file>
     </qresource>
+    <qresource prefix="/media">
+        <file>Ding.wav</file>
+    </qresource>
 </RCC>

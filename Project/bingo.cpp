@@ -1,8 +1,6 @@
 #include "bingo.h"
 #include "ui_bingo.h"
 #include "bingofileparser.h"
-#include <QLabel>
-#include <QSizePolicy>
 
 BingoFileParser bingoFileParse;
 
@@ -20,6 +18,9 @@ void Bingo::onCreate() {
     createBingo();
     constructButtons();
     fillInButtons();
+    player->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.25);
+    player->setSource(QUrl("qrc:/media/Ding.wav"));
 }
 
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
@@ -39,6 +40,7 @@ void Bingo::createBingo() {
     int random;
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
+            bingo[i][j] = false;
             if(bingoValues.size() != 0){
             random = rand()%(bingoValues.size());
             string tile_tmp = bingoValues.at(random);
@@ -140,7 +142,7 @@ int Bingo::checkBingo() {
                 bingoCount++;
             }
         }
-        return bingoCheck;
+        return bingoCount;
     }
 
 void Bingo::onPushButtonClicked() {
@@ -153,7 +155,12 @@ void Bingo::onPushButtonClicked() {
                 bingo[indexx][indexy] = true;
             }
             else {
-                btn->setStyleSheet("background-color: none;");
+                if(QSysInfo::productType().toStdString() != "windows") {
+                    btn->setStyleSheet("background-color: none;");
+                }
+                else {
+                    btn->setStyleSheet("background-color: rgb(32, 32, 32);");
+                }
                 bingo[indexx][indexy] = false;
             }
         }
@@ -162,6 +169,28 @@ void Bingo::onPushButtonClicked() {
             indexy = 0;
             indexx++;
         }
+    }
+
+    int bingoCount_ = checkBingo();
+    setBingoCountText(bingoCount_);
+    playAudio(bingoCount_);
+    bingoCount = bingoCount_;
+}
+
+void Bingo::setBingoCountText(int bingoCount_) {
+    ostringstream oss;
+    oss << "Bingo: " << bingoCount_;
+    if(bingoCount_ > 0)
+        ui->bingoLabel->setText(QString::fromStdString(oss.str()));
+    else
+        ui->bingoLabel->setText("");
+}
+
+void Bingo::playAudio(int bingoCount_) {
+    if(bingoCount < bingoCount_) {
+        if(player->playbackState() == QMediaPlayer::PlayingState)
+            player->stop();
+        player->play();
     }
 }
 
@@ -190,4 +219,3 @@ void Bingo::on_pushButton52_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton53_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton54_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton55_clicked() { onPushButtonClicked(); }
-
