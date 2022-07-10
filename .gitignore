@@ -1,5 +1,8 @@
 build-Bingomonium-Desktop-Debug
 build-Bingomonium-Desktop-Release
 build-Bingomonium-Desktop-Profile
+build-Bingomonium-Desktop_Qt_6_3_1_MinGW_64_bit-Debug
+build-Bingomonium-Desktop_Qt_6_3_1_MinGW_64_bit-Release
+build-Bingomonium-Desktop_Qt_6_3_1_MinGW_64_bit-Profile
 Project/Bingomonium.pro.user
 *.user
