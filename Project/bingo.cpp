@@ -20,7 +20,7 @@ void Bingo::onCreate() {
     fillInButtons();
     player->setAudioOutput(audioOutput);
     audioOutput->setVolume(0.25);
-    player->setSource(QUrl("bingos/Ding.wav"));
+    player->setSource(QUrl("qrc:/media/Ding.wav"));
 }
 
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
