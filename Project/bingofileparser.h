@@ -27,6 +27,7 @@ private:
     vector<string> valuesData;
 
     void _convertToFormatedBingoData();
+    vector<string> _convertToFriendlyFileNames(vector<string> allFilesList);
 };
 
 #endif // BINGOFILEPARSER_H

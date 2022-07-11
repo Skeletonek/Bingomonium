@@ -26,7 +26,7 @@ MainWindow::~MainWindow() {
 void MainWindow::on_listView_clicked(const QModelIndex &index) {
     QString itemText = index.data(Qt::DisplayRole).toString();
     bingoDialog = new Bingo(this);
-    bingoDialog->setBingoFilePath(itemText.toStdString());
+    bingoDialog->setBingoFilePath("bingos/" + itemText.toStdString() + ".bgo");
     bingoDialog->onCreate();
     bingoDialog->show();
 }

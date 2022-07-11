@@ -43,14 +43,23 @@ vector<string> BingoFileParser::getAllFiles() {
     try {
         string path = "bingos";
         for (const auto & entry : filesystem::directory_iterator(path)) {
-            allFilesList.insert(allFilesList.end(), (entry.path().string())); //FIX
+            allFilesList.insert(allFilesList.end(), (entry.path().string()));
         }
     } catch (filesystem::filesystem_error) {
         cout << "Filesystem Error Caught";
     } catch (exception) {
         cout << "Exception Caught";
     }
-    return allFilesList;
+    return _convertToFriendlyFileNames(allFilesList);
+}
+
+vector<string> BingoFileParser::_convertToFriendlyFileNames(vector<string> allFilesList) {
+    vector<string> allFilesFriendlyList;
+    for(string str : allFilesList) {
+        string str_fr = str.substr(7, str.length()-11);
+        allFilesFriendlyList.push_back(str_fr);
+    }
+    return allFilesFriendlyList;
 }
 
 void BingoFileParser::_convertToFormatedBingoData() {
