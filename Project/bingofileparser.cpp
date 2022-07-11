@@ -17,25 +17,41 @@ vector<string> BingoFileParser::getCategoriesData() { return categoriesData; }
 vector<string> BingoFileParser::getValuesData() { return valuesData; }
 
 void BingoFileParser::readFile(string filename) {
-    string line;
-    fstream file;
+//    string line;
+//    fstream file;
     unformattedData.clear();
     categoriesData.clear();
     valuesData.clear();
 
-    file.open(filename, ios::in | ios::out);
-    if(file.good()){
-       while( !file.eof() ) {
-          getline(file, line);
-          if(line != "") {
-          unformattedData.push_back(line);
-          }
-       }
-       _convertToFormatedBingoData();
-    }
-    else {
+    QFile file(QString::fromStdString(filename));
+
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
         cout << "There was an error while opening a file";
+        return;
     }
+
+    QTextStream ts(&file);
+    while (!ts.atEnd()) {
+        string line = ts.readLine().toStdString();
+        if(line != "") {
+            unformattedData.push_back(line);
+        }
+    }
+
+    _convertToFormatedBingoData();
+//    file.open(filename, ios::in | ios::out);
+//    if(file.good()){
+//       while( !file.eof() ) {
+//          getline(file, line);
+//          if(line != "") {
+//          unformattedData.push_back(line);
+//          }
+//       }
+//       _convertToFormatedBingoData();
+//    }
+//    else {
+//        cout << "There was an error while opening a file";
+//    }
 }
 
 vector<string> BingoFileParser::getAllFiles() {

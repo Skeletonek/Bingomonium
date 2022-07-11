@@ -7,6 +7,9 @@
 #include <map>
 #include <fstream>
 #include <vector>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
 
 using namespace std;
 
