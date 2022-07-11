@@ -12,7 +12,7 @@ There are pre-builded releases available to download here - [Releases](https://g
 It should contain everything needed to run. Just launch the .exe
 
 ## Linux
-Make sure you have Qt6-qtbase package installed in your distribution. Afterwards, run executable.
+Make sure you have Qt6-qtbase and Qt6-qtmultimedia package installed in your distribution. Afterwards, run executable.
 
 # Compiling
-Clone the git and run the Bingomonium.pro file from Qt Creator. You need to have Qt6 SDK installed.
+Clone the git and run the Bingomonium.pro file from Qt Creator. You need to have Qt6 SDK installed to compile it properly.
