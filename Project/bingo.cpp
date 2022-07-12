@@ -15,9 +15,10 @@ Bingo::~Bingo() { delete ui; }
 void Bingo::onCreate() {
     bingoFileParse.readFile(bingoFilePath);
     bingoValues = bingoFileParse.getValuesData();
-    createBingo();
+    bingoCategories = bingoFileParse.getCategoriesData();
     constructButtons();
-    fillInButtons();
+    fillInCategoriesList();
+    createBingo();
     player->setAudioOutput(audioOutput);
     audioOutput->setVolume(0.25);
     player->setSource(QUrl("qrc:/media/Ding.wav"));
@@ -26,15 +27,6 @@ void Bingo::onCreate() {
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
 
 void Bingo::on_Bingo_destroyed() { }
-
-void Bingo::wordWrapQLabel(QString str, int btnIndex) {
-    auto label = new QLabel(str, btnArr[btnIndex]);
-    label->setWordWrap(true);
-    label->setAlignment(Qt::AlignHCenter);
-    label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
-    label->setMargin(8);
-    label->setStyleSheet("background-color: none;");
-}
 
 void Bingo::createBingo() {
     int random;
@@ -45,47 +37,64 @@ void Bingo::createBingo() {
             random = rand()%(bingoValues.size());
             string tile_tmp = bingoValues.at(random);
             bingoValues.erase(bingoValues.begin()+random);
+            bingoCategories.erase(bingoCategories.begin()+random);
             bingoText[i][j] = tile_tmp;
             }
         }
     }
-}
 
-void Bingo::constructButtons() {
-    buttons = ui->buttonsGrid->children();
-    btnArr[0] = ui->pushButton11;
-    btnArr[1] = ui->pushButton12;
-    btnArr[2] = ui->pushButton13;
-    btnArr[3] = ui->pushButton14;
-    btnArr[4] = ui->pushButton15;
-    btnArr[5] = ui->pushButton21;
-    btnArr[6] = ui->pushButton22;
-    btnArr[7] = ui->pushButton23;
-    btnArr[8] = ui->pushButton24;
-    btnArr[9] = ui->pushButton25;
-    btnArr[10] = ui->pushButton31;
-    btnArr[11] = ui->pushButton32;
-    btnArr[12] = ui->pushButton33;
-    btnArr[13] = ui->pushButton34;
-    btnArr[14] = ui->pushButton35;
-    btnArr[15] = ui->pushButton41;
-    btnArr[16] = ui->pushButton42;
-    btnArr[17] = ui->pushButton43;
-    btnArr[18] = ui->pushButton44;
-    btnArr[19] = ui->pushButton45;
-    btnArr[20] = ui->pushButton51;
-    btnArr[21] = ui->pushButton52;
-    btnArr[22] = ui->pushButton53;
-    btnArr[23] = ui->pushButton54;
-    btnArr[24] = ui->pushButton55;
+    fillInButtons();
+    bingoCreatedOnce = true;
 }
 
 void Bingo::fillInButtons() {
     int k = 0;
     for(int i = 0; i < 5; i++) {
         for(int j = 0; j < 5; j++) {
-            wordWrapQLabel(QString::fromStdString(bingoText[i][j]), k);
+            if(!bingoCreatedOnce) {
+                createQLabel(QString::fromStdString(bingoText[i][j]), k);
+            } else {
+                setTextQLabel(QString::fromStdString(bingoText[i][j]), k);
+            }
             k++;
+        }
+    }
+}
+
+void Bingo::createQLabel(QString str, int btnIndex) {
+
+    //Default PushButton labels don't support text wrapping
+    //We need to embed QLabels to QPushButtons for text wrap support
+
+    QLabel *label = new QLabel(str, btnArr[btnIndex]);
+    label->setWordWrap(true);
+    label->setAlignment(Qt::AlignHCenter);
+    label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
+    label->setMargin(8);
+    label->setStyleSheet("background-color: none;");
+}
+
+void Bingo::setTextQLabel(QString str, int btnIndex) {
+    QLabel *label = btnArr[btnIndex]->findChild<QLabel*>();
+    label->setText(str);
+}
+
+void Bingo::fillInCategoriesList() {
+    QStringList catList;
+    QStringListModel* model = new QStringListModel(this);
+    for(string cat : bingoCategories) {
+        if(!catList.contains(QString::fromStdString(cat)) && cat != "") {
+            catList.push_back(QString::fromStdString(cat));
+        }
+    }
+    model->setStringList(catList);
+    ui->listView_categories->setModel(model);
+}
+
+void Bingo::destroyQLabels() {
+    for(QPushButton *btn : btnArr) {
+        for(QObject *obj : btn->children()) {
+            obj->deleteLater();
         }
     }
 }
@@ -181,9 +190,9 @@ void Bingo::setBingoCountText(int bingoCount_) {
     ostringstream oss;
     oss << "Bingo: " << bingoCount_;
     if(bingoCount_ > 0)
-        ui->bingoLabel->setText(QString::fromStdString(oss.str()));
+        ui->label_bingo->setText(QString::fromStdString(oss.str()));
     else
-        ui->bingoLabel->setText("");
+        ui->label_bingo->setText("");
 }
 
 void Bingo::playAudio(int bingoCount_) {
@@ -192,6 +201,47 @@ void Bingo::playAudio(int bingoCount_) {
             player->stop();
         player->play();
     }
+}
+
+void Bingo::on_listView_categories_clicked(const QModelIndex &index)
+{
+
+}
+
+void Bingo::on_pushButton_regenBingo_clicked()
+{
+    bingoValues = bingoFileParse.getValuesData();
+    bingoCategories = bingoFileParse.getCategoriesData();
+    createBingo();
+}
+
+void Bingo::constructButtons() {
+    buttons = ui->grid_button->children();
+    btnArr[0] = ui->pushButton11;
+    btnArr[1] = ui->pushButton12;
+    btnArr[2] = ui->pushButton13;
+    btnArr[3] = ui->pushButton14;
+    btnArr[4] = ui->pushButton15;
+    btnArr[5] = ui->pushButton21;
+    btnArr[6] = ui->pushButton22;
+    btnArr[7] = ui->pushButton23;
+    btnArr[8] = ui->pushButton24;
+    btnArr[9] = ui->pushButton25;
+    btnArr[10] = ui->pushButton31;
+    btnArr[11] = ui->pushButton32;
+    btnArr[12] = ui->pushButton33;
+    btnArr[13] = ui->pushButton34;
+    btnArr[14] = ui->pushButton35;
+    btnArr[15] = ui->pushButton41;
+    btnArr[16] = ui->pushButton42;
+    btnArr[17] = ui->pushButton43;
+    btnArr[18] = ui->pushButton44;
+    btnArr[19] = ui->pushButton45;
+    btnArr[20] = ui->pushButton51;
+    btnArr[21] = ui->pushButton52;
+    btnArr[22] = ui->pushButton53;
+    btnArr[23] = ui->pushButton54;
+    btnArr[24] = ui->pushButton55;
 }
 
 void Bingo::on_pushButton11_clicked() { onPushButtonClicked(); }
@@ -219,3 +269,4 @@ void Bingo::on_pushButton52_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton53_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton54_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton55_clicked() { onPushButtonClicked(); }
+

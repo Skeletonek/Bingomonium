@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     model->setStringList(list);
     ui->setupUi(this);
-    ui->listView->setModel(model);
+    ui->listView_bingos->setModel(model);
     srand(time(0));
 }
 
@@ -23,7 +23,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_listView_clicked(const QModelIndex &index) {
+void MainWindow::on_listView_bingos_clicked(const QModelIndex &index) {
     QString itemText = index.data(Qt::DisplayRole).toString();
     bingoDialog = new Bingo(this);
     bingoDialog->setBingoFilePath("bingos/" + itemText.toStdString() + ".bgo");

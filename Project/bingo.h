@@ -8,6 +8,7 @@
 #include <QSysInfo>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QStringListModel>
 
 using namespace std;
 
@@ -33,6 +34,7 @@ private:
     Ui::Bingo *ui;
 
     int bingoCount;
+    bool bingoCreatedOnce = false;
     bool bingo[5][5];
     string bingoText[5][5];
     string bingoFilePath;
@@ -42,9 +44,12 @@ private:
     vector<string> bingoValues;
 
     void constructButtons();
-    void fillInButtons();
-    void wordWrapQLabel(QString str, int btnIndex);
     void createBingo();
+    void fillInButtons();
+    void createQLabel(QString str, int btnIndex);
+    void setTextQLabel(QString str, int btnIndex);
+    void fillInCategoriesList();
+    void destroyQLabels();
     int checkBingo();
     void setBingoCountText(int bingoCount_);
     void playAudio(int bingoCount_);
@@ -77,6 +82,8 @@ private slots:
     void on_pushButton54_clicked();
     void on_pushButton55_clicked();
     void on_Bingo_destroyed();
+    void on_listView_categories_clicked(const QModelIndex &index);
+    void on_pushButton_regenBingo_clicked();
 };
 
 #endif // BINGO_H
