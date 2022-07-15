@@ -54,6 +54,7 @@ private:
     void setBingoCountText(int bingoCount_);
     void playAudio(int bingoCount_);
     void onPushButtonClicked();
+    void updateButton(int indexx, int indexy);
 
 private slots:
     void on_pushButton11_clicked();

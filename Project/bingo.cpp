@@ -34,11 +34,11 @@ void Bingo::createBingo() {
         for(int j = 0; j < 5; j++){
             bingo[i][j] = false;
             if(bingoValues.size() != 0){
-            random = rand()%(bingoValues.size());
-            string tile_tmp = bingoValues.at(random);
-            bingoValues.erase(bingoValues.begin()+random);
-            bingoCategories.erase(bingoCategories.begin()+random);
-            bingoText[i][j] = tile_tmp;
+                random = rand()%(bingoValues.size());
+                string tile_tmp = bingoValues.at(random);
+                bingoValues.erase(bingoValues.begin()+random);
+                bingoCategories.erase(bingoCategories.begin()+random);
+                bingoText[i][j] = tile_tmp;
             }
         }
     }
@@ -100,78 +100,66 @@ void Bingo::destroyQLabels() {
 }
 
 int Bingo::checkBingo() {
-        int bingoCount = 0;
-        bool bingoCheck;
+    int bingoCount = 0;
+    bool bingoCheck;
 
-        for(int x = 0; x < 5; x++) { //Horizontal Check
-            bingoCheck = true;
-            for (int y = 0; y < 5; y++) {
-                if(!bingo[x][y]) {
-                    bingoCheck = false;
-                    break;
-                }
-            }
-            if(bingoCheck) {
-                bingoCount++;
+    for(int x = 0; x < 5; x++) { //Horizontal Check
+        bingoCheck = true;
+        for (int y = 0; y < 5; y++) {
+            if(!bingo[x][y]) {
+                bingoCheck = false;
+                break;
             }
         }
-
-        for(int x = 0; x < 5; x++) { //Vertical Check
-            bingoCheck = true;
-            for (int y = 0; y < 5; y++) {
-                if(!bingo[y][x]) {
-                    bingoCheck = false;
-                    break;
-                }
-            }
-            if(bingoCheck) {
-                bingoCount++;
-            }
+        if(bingoCheck) {
+            bingoCount++;
         }
-
-        if (bingo[2][2]) { //Diagonal check
-            bingoCheck = true;
-            for (int z = 0; z < 5; z++) { // Top left diagonal
-                if (!bingo[z][z]) {
-                    bingoCheck = false;
-                    break;
-                }
-            }
-            if (bingoCheck) {
-                bingoCount++;
-            }
-            bingoCheck = true;
-            for (int z = 0; z < 5; z++) { // Top right diagonal
-                if (!bingo[z][5 - 1 - z]) {
-                    bingoCheck = false;
-                    break;
-                }
-            }
-            if (bingoCheck) {
-                bingoCount++;
-            }
-        }
-        return bingoCount;
     }
+
+    for(int x = 0; x < 5; x++) { //Vertical Check
+        bingoCheck = true;
+        for (int y = 0; y < 5; y++) {
+            if(!bingo[y][x]) {
+                bingoCheck = false;
+                break;
+            }
+        }
+        if(bingoCheck) {
+            bingoCount++;
+        }
+    }
+
+    if (bingo[2][2]) { //Diagonal check
+        bingoCheck = true;
+        for (int z = 0; z < 5; z++) { // Top left diagonal
+            if (!bingo[z][z]) {
+                bingoCheck = false;
+                break;
+            }
+        }
+        if (bingoCheck) {
+            bingoCount++;
+        }
+        bingoCheck = true;
+        for (int z = 0; z < 5; z++) { // Top right diagonal
+            if (!bingo[z][5 - 1 - z]) {
+                bingoCheck = false;
+                break;
+            }
+        }
+        if (bingoCheck) {
+            bingoCount++;
+        }
+    }
+    return bingoCount;
+}
 
 void Bingo::onPushButtonClicked() {
     int indexx = 0; int indexy = 0;
 
     for(QPushButton* btn : btnArr) {
         if(btn == sender()) {
-            if(!bingo[indexx][indexy]) {
-                btn->setStyleSheet("background-color: red;");
-                bingo[indexx][indexy] = true;
-            }
-            else {
-                if(QSysInfo::productType().toStdString() != "windows") {
-                    btn->setStyleSheet("background-color: none;");
-                }
-                else {
-                    btn->setStyleSheet("background-color: rgb(32, 32, 32);");
-                }
-                bingo[indexx][indexy] = false;
-            }
+            updateButton(indexx, indexy);
         }
         indexy++;
         if(indexy > 4) {
@@ -184,6 +172,29 @@ void Bingo::onPushButtonClicked() {
     setBingoCountText(bingoCount_);
     playAudio(bingoCount_);
     bingoCount = bingoCount_;
+}
+
+void Bingo::updateButton(int indexx, int indexy) {
+    int btnNmbr = 0;
+    for(int x = 0; x < indexx; x++) {
+        btnNmbr += 5;
+    }
+    for(int y = 0; y < indexy; y++) {
+        btnNmbr ++;
+    }
+    if(!bingo[indexx][indexy]) {
+        btnArr[btnNmbr]->setStyleSheet("background-color: red;");
+        bingo[indexx][indexy] = true;
+    }
+    else {
+        if(QSysInfo::productType().toStdString() != "windows") {
+            btnArr[btnNmbr]->setStyleSheet("background-color: none;");
+        }
+        else {
+            btnArr[btnNmbr]->setStyleSheet("background-color: rgb(32, 32, 32);");
+        }
+        bingo[indexx][indexy] = false;
+    }
 }
 
 void Bingo::setBingoCountText(int bingoCount_) {
@@ -213,6 +224,19 @@ void Bingo::on_pushButton_regenBingo_clicked()
     bingoValues = bingoFileParse.getValuesData();
     bingoCategories = bingoFileParse.getCategoriesData();
     createBingo();
+
+    int indexx = 0; int indexy = 0;
+    for(int i = 0; i < 25; i++) {
+        bingo[indexx][indexy] = true;
+        updateButton(indexx, indexy);
+        indexy++;
+        if(indexy > 4) {
+            indexy = 0;
+            indexx++;
+        }
+    }
+    int bingoCount_ = checkBingo();
+    setBingoCountText(bingoCount_);
 }
 
 void Bingo::constructButtons() {
