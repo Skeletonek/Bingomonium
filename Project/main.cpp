@@ -4,6 +4,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QSysInfo>
+#include <QKeyEvent>
 
 int main(int argc, char *argv[])
 {

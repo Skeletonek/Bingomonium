@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QStringListModel>
 #include <vector>
+#include <QSysInfo>
 
 #include <bingo.h>
 #include <bingofileparser.h>
@@ -22,6 +23,7 @@ public:
 
 private slots:
     void on_listView_bingos_clicked(const QModelIndex &index);
+    void keyPressEvent(QKeyEvent* k);
 
 private:
     Ui::MainWindow *ui;
