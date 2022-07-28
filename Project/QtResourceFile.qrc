@@ -3,7 +3,8 @@
         <file>logo.xpm</file>
     </qresource>
     <qresource prefix="/img">
-        <file>bingomonium_logo.png</file>
+        <file>qtlogo.xpm</file>
+        <file>banner.xpm</file>
     </qresource>
     <qresource prefix="/media">
         <file>Ding.wav</file>
