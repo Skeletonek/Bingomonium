@@ -88,7 +88,7 @@ void Bingo::createQLabel(QString str, int btnIndex) {
 
 void Bingo::setTextQLabel(QString str, int btnIndex) {
     QLabel *label = btnArr[btnIndex]->findChild<QLabel*>();
-    label->setText(str);
+    label->setText("<html><head/><body><p>" + str + "</p></body></html>");
 }
 
 void Bingo::fillInCategoriesList() {
