@@ -78,17 +78,19 @@ void Bingo::createQLabel(QString str, int btnIndex) {
     //Default PushButton labels don't support text wrapping
     //We need to embed QLabels to QPushButtons for text wrap support
 
-    QLabel *label = new QLabel(str, btnArr[btnIndex]);
+    QLabel *label = new QLabel("<html><body>" + str + "</body></html>", btnArr[btnIndex]);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignHCenter);
     label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
     label->setMargin(8);
     label->setStyleSheet("background-color: none;");
+    label->setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
 void Bingo::setTextQLabel(QString str, int btnIndex) {
     QLabel *label = btnArr[btnIndex]->findChild<QLabel*>();
-    label->setText("<html><head/><body><p>" + str + "</p></body></html>");
+    str = "<html><body>" + str + "</body></html>";
+    label->setText(str);
 }
 
 void Bingo::fillInCategoriesList() {
