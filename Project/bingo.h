@@ -36,12 +36,14 @@ private:
     int bingoCount;
     bool bingoCreatedOnce = false;
     bool bingo[5][5];
+    vector<bool> bingoCat;
     string bingoText[5][5];
     string bingoFilePath;
     QPushButton *btnArr[25];
     QObjectList buttons;
     vector<string> bingoCategories;
     vector<string> bingoValues;
+    QStringListModel* model;
 
     void constructButtons();
     void createBingo();

@@ -33,12 +33,24 @@ void Bingo::createBingo() {
     for(int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
             bingo[i][j] = false;
+            bingoText[i][j] = "";
             if(bingoValues.size() != 0){
-                random = rand()%(bingoValues.size());
-                string tile_tmp = bingoValues.at(random);
-                bingoValues.erase(bingoValues.begin()+random);
-                bingoCategories.erase(bingoCategories.begin()+random);
-                bingoText[i][j] = tile_tmp;
+                do {
+                    random = rand()%(bingoValues.size());
+                    if(bingoCategories.at(random) != "") {
+                        if(bingoCat.at(model->stringList().indexOf((QString::fromStdString(bingoCategories.at(random))))) == true) {
+                                string tile_tmp = bingoValues.at(random);
+                                bingoValues.erase(bingoValues.begin()+random);
+                                bingoCategories.erase(bingoCategories.begin()+random);
+                                bingoText[i][j] = tile_tmp;
+                        }
+                    } else {
+                    string tile_tmp = bingoValues.at(random);
+                    bingoValues.erase(bingoValues.begin()+random);
+                    bingoCategories.erase(bingoCategories.begin()+random);
+                    bingoText[i][j] = tile_tmp;
+                    }
+                } while(bingoText[i][j] == "");
             }
         }
     }
@@ -66,25 +78,28 @@ void Bingo::createQLabel(QString str, int btnIndex) {
     //Default PushButton labels don't support text wrapping
     //We need to embed QLabels to QPushButtons for text wrap support
 
-    QLabel *label = new QLabel(str, btnArr[btnIndex]);
+    QLabel *label = new QLabel("<html><body>" + str + "</body></html>", btnArr[btnIndex]);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignHCenter);
     label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
     label->setMargin(8);
     label->setStyleSheet("background-color: none;");
+    label->setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
 void Bingo::setTextQLabel(QString str, int btnIndex) {
     QLabel *label = btnArr[btnIndex]->findChild<QLabel*>();
+    str = "<html><body>" + str + "</body></html>";
     label->setText(str);
 }
 
 void Bingo::fillInCategoriesList() {
     QStringList catList;
-    QStringListModel* model = new QStringListModel(this);
+    model = new QStringListModel(this);
     for(string cat : bingoCategories) {
         if(!catList.contains(QString::fromStdString(cat)) && cat != "") {
             catList.push_back(QString::fromStdString(cat));
+            bingoCat.push_back(false);
         }
     }
     model->setStringList(catList);
@@ -214,9 +229,11 @@ void Bingo::playAudio(int bingoCount_) {
     }
 }
 
-void Bingo::on_listView_categories_clicked(const QModelIndex &index)
+void Bingo::on_listView_categories_clicked(const QModelIndex& index)
 {
-
+    bool catRow = bingoCat.at(index.row());
+    catRow = catRow ? false : true;
+    bingoCat.at(index.row()) = catRow;
 }
 
 void Bingo::on_pushButton_regenBingo_clicked()

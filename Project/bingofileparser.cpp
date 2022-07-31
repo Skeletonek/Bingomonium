@@ -26,7 +26,7 @@ void BingoFileParser::readFile(string filename) {
     QFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        cout << "There was an error while opening a file";
+        cout << "File parser threw an unknown error while opening a file. Check if it's accessible for current logged in user.\n";
         return;
     }
 
@@ -62,9 +62,9 @@ vector<string> BingoFileParser::getAllFiles() {
             allFilesList.insert(allFilesList.end(), (entry.path().string()));
         }
     } catch (filesystem::filesystem_error) {
-        cout << "Filesystem Error Caught";
+        cout << "Filesystem Error caught. Check if 'bingos' folder exist and is accessbile for current user.";
     } catch (exception) {
-        cout << "Exception Caught";
+        cout << "Unknown Exception caught";
     }
     return _convertToFriendlyFileNames(allFilesList);
 }
