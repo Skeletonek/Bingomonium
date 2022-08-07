@@ -31,6 +31,9 @@ private:
 
     void _convertToFormatedBingoData();
     vector<string> _convertToFriendlyFileNames(vector<string> allFilesList);
+    string _translateFile(string value_str);
+    string _translateAmpersandToHTML(string value);
+    string _translateAngleBrackets(string value);
 };
 
 #endif // BINGOFILEPARSER_H
