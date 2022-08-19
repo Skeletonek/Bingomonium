@@ -84,8 +84,6 @@ private slots:
     void on_pushButton53_clicked();
     void on_pushButton54_clicked();
     void on_pushButton55_clicked();
-    void on_Bingo_destroyed();
-    void on_listView_categories_clicked(const QModelIndex &index);
     void on_pushButton_regenBingo_clicked();
 };
 

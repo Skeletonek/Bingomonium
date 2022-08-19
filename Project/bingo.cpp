@@ -26,8 +26,6 @@ void Bingo::onCreate() {
 
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
 
-void Bingo::on_Bingo_destroyed() { }
-
 void Bingo::createBingo() {
     int random;
     for(int i = 0; i < 5; i++){
@@ -169,26 +167,6 @@ int Bingo::checkBingo() {
     return bingoCount;
 }
 
-void Bingo::onPushButtonClicked() {
-    int indexx = 0; int indexy = 0;
-
-    for(QPushButton* btn : btnArr) {
-        if(btn == sender()) {
-            updateButton(indexx, indexy);
-        }
-        indexy++;
-        if(indexy > 4) {
-            indexy = 0;
-            indexx++;
-        }
-    }
-
-    int bingoCount_ = checkBingo();
-    setBingoCountText(bingoCount_);
-    playAudio(bingoCount_);
-    bingoCount = bingoCount_;
-}
-
 void Bingo::updateButton(int indexx, int indexy) {
     int btnNmbr = 0;
     for(int x = 0; x < indexx; x++) {
@@ -229,15 +207,40 @@ void Bingo::playAudio(int bingoCount_) {
     }
 }
 
-void Bingo::on_listView_categories_clicked(const QModelIndex& index)
-{
-    bool catRow = bingoCat.at(index.row());
-    catRow = catRow ? false : true;
-    bingoCat.at(index.row()) = catRow;
+void Bingo::onPushButtonClicked() {
+    int indexx = 0; int indexy = 0;
+
+    for(QPushButton* btn : btnArr) {
+        if(btn == sender()) {
+            updateButton(indexx, indexy);
+        }
+        indexy++;
+        if(indexy > 4) {
+            indexy = 0;
+            indexx++;
+        }
+    }
+
+    int bingoCount_ = checkBingo();
+    setBingoCountText(bingoCount_);
+    playAudio(bingoCount_);
+    bingoCount = bingoCount_;
 }
 
 void Bingo::on_pushButton_regenBingo_clicked()
 {
+    QModelIndexList list = ui->listView_categories->selectionModel()->selectedIndexes();
+    for(int i = 0; i < (int)bingoCat.size(); i++){
+        foreach(const QModelIndex &index, list){
+            if(index.row() == i){
+                bingoCat.at(i) = true;
+                break;
+            } else {
+                bingoCat.at(i) = false;
+            }
+        }
+    }
+
     bingoValues = bingoFileParse.getValuesData();
     bingoCategories = bingoFileParse.getCategoriesData();
     createBingo();
