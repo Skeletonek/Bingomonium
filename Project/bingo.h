@@ -23,8 +23,8 @@ public:
     explicit Bingo(QWidget *parent = nullptr);
     ~Bingo();
     int bingoID;
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput *audioOutput = new QAudioOutput;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
 
     void setBingoFilePath(string bingoFilePath_Value);
 

@@ -16,12 +16,18 @@ void Bingo::onCreate() {
     bingoFileParse.readFile(bingoFilePath);
     bingoValues = bingoFileParse.getValuesData();
     bingoCategories = bingoFileParse.getCategoriesData();
+    player = new QMediaPlayer();
+    audioOutput = new QAudioOutput();
     constructButtons();
     fillInCategoriesList();
     createBingo();
     player->setAudioOutput(audioOutput);
     audioOutput->setVolume(0.25);
     player->setSource(QUrl("qrc:/media/Ding.wav"));
+
+    if(bingoFilePath == "bingos/BiniumMongo.bgo"){
+        setWindowIcon(QIcon(":/img/BiniumMongo.xpm"));
+    }
 }
 
 void Bingo::setBingoFilePath(string bingoFilePath_) { bingoFilePath = bingoFilePath_; }
@@ -313,4 +319,3 @@ void Bingo::on_pushButton52_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton53_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton54_clicked() { onPushButtonClicked(); }
 void Bingo::on_pushButton55_clicked() { onPushButtonClicked(); }
-

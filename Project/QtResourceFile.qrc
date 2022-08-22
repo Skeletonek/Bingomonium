@@ -5,6 +5,7 @@
     <qresource prefix="/img">
         <file>qtlogo.xpm</file>
         <file>banner.xpm</file>
+        <file alias="BiniumMongo.xpm">media/xpm/BiniumMongo.xpm</file>
     </qresource>
     <qresource prefix="/media">
         <file>Ding.wav</file>
