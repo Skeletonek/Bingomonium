@@ -11,6 +11,6 @@
         <file>Ding.wav</file>
     </qresource>
     <qresource prefix="/i18n">
-        <file>Bingomonium_pl_PL.ts</file>
+        <file>Bingomonium_pl_PL.qm</file>
     </qresource>
 </RCC>

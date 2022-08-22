@@ -427,7 +427,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Generuj ponownie</string>
+    <string>Generate again</string>
    </property>
   </widget>
  </widget>
