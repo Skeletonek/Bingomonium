@@ -18,9 +18,11 @@ void Bingo::onCreate() {
     bingoCategories = bingoFileParse.getCategoriesData();
     player = new QMediaPlayer();
     audioOutput = new QAudioOutput();
+
     constructButtons();
     fillInCategoriesList();
     createBingo();
+
     player->setAudioOutput(audioOutput);
     audioOutput->setVolume(0.25);
     player->setSource(QUrl("qrc:/media/Ding.wav"));
@@ -41,19 +43,15 @@ void Bingo::createBingo() {
             if(bingoValues.size() != 0){
                 do {
                     random = rand()%(bingoValues.size());
-                    if(bingoCategories.at(random) != "") {
-                        if(bingoCat.at(model->stringList().indexOf((QString::fromStdString(bingoCategories.at(random))))) == true) {
-                                string tile_tmp = bingoValues.at(random);
-                                bingoValues.erase(bingoValues.begin()+random);
-                                bingoCategories.erase(bingoCategories.begin()+random);
-                                bingoText[i][j] = tile_tmp;
+                        if(bingoCategories.at(random) == "" ||
+                                bingoCat.at(model->stringList().indexOf
+                                (QString::fromStdString(
+                                     bingoCategories.at(random)))) == true) {
+                            string tile_tmp = bingoValues.at(random);
+                            bingoValues.erase(bingoValues.begin()+random);
+                            bingoCategories.erase(bingoCategories.begin()+random);
+                            bingoText[i][j] = tile_tmp;
                         }
-                    } else {
-                    string tile_tmp = bingoValues.at(random);
-                    bingoValues.erase(bingoValues.begin()+random);
-                    bingoCategories.erase(bingoCategories.begin()+random);
-                    bingoText[i][j] = tile_tmp;
-                    }
                 } while(bingoText[i][j] == "");
             }
         }
@@ -85,7 +83,7 @@ void Bingo::createQLabel(QString str, int btnIndex) {
     QLabel *label = new QLabel("<html><body>" + str + "</body></html>", btnArr[btnIndex]);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignHCenter);
-    label->setGeometry(0, 0, 105, 120); //Find out how to get buttons size
+    label->setGeometry(0, 0, 105, 120); //TODO: Find out how to get buttons size
     label->setMargin(8);
     label->setStyleSheet("background-color: none;");
     label->setTextInteractionFlags(Qt::NoTextInteraction);
@@ -181,28 +179,28 @@ void Bingo::updateButton(int indexx, int indexy) {
     for(int y = 0; y < indexy; y++) {
         btnNmbr ++;
     }
+
     if(!bingo[indexx][indexy]) {
         btnArr[btnNmbr]->setStyleSheet("background-color: red;");
-        bingo[indexx][indexy] = true;
-    }
-    else {
+    } else {
         if(QSysInfo::productType().toStdString() != "windows") {
             btnArr[btnNmbr]->setStyleSheet("background-color: none;");
-        }
-        else {
+        } else {
             btnArr[btnNmbr]->setStyleSheet("background-color: rgb(32, 32, 32);");
         }
-        bingo[indexx][indexy] = false;
     }
+
+    bingo[indexx][indexy] = !bingo[indexx][indexy];
 }
 
 void Bingo::setBingoCountText(int bingoCount_) {
     ostringstream oss;
     oss << "Bingo: " << bingoCount_;
-    if(bingoCount_ > 0)
+    if(bingoCount_ > 0) {
         ui->label_bingo->setText(QString::fromStdString(oss.str()));
-    else
+    } else {
         ui->label_bingo->setText("");
+    }
 }
 
 void Bingo::playAudio(int bingoCount_) {
@@ -227,10 +225,10 @@ void Bingo::onPushButtonClicked() {
         }
     }
 
-    int bingoCount_ = checkBingo();
-    setBingoCountText(bingoCount_);
-    playAudio(bingoCount_);
-    bingoCount = bingoCount_;
+    int _bingoCount = checkBingo();
+    setBingoCountText(_bingoCount);
+    playAudio(_bingoCount);
+    bingoCount = _bingoCount;
 }
 
 void Bingo::on_pushButton_regenBingo_clicked()

@@ -1,9 +1,9 @@
-//Struktura pliku
-//Kategoria:Tutaj tekst karty &bingo&
+//File structure
+//Category:Card text &bingo&
 //
-//Ten format jest podobny do poprzedniej wersji z tym że wpisywana jest teraz
-// nazwa kategorii a nie ID kategorii.
-//& - ampersandy oznaczją wyróżnienie tekstu
+//This format is similar to the previous version but now we put
+// name of a category instead of ID.
+//& - ampersands mean highlighting text
 
 #include "bingofileparser.h"
 
@@ -17,8 +17,6 @@ vector<string> BingoFileParser::getCategoriesData() { return categoriesData; }
 vector<string> BingoFileParser::getValuesData() { return valuesData; }
 
 void BingoFileParser::readFile(string filename) {
-//    string line;
-//    fstream file;
     unformattedData.clear();
     categoriesData.clear();
     valuesData.clear();
@@ -40,19 +38,6 @@ void BingoFileParser::readFile(string filename) {
     }
 
     _convertToFormatedBingoData();
-//    file.open(filename, ios::in | ios::out);
-//    if(file.good()){
-//       while( !file.eof() ) {
-//          getline(file, line);
-//          if(line != "") {
-//          unformattedData.push_back(line);
-//          }
-//       }
-//       _convertToFormatedBingoData();
-//    }
-//    else {
-//        cout << "There was an error while opening a file";
-//    }
 }
 
 vector<string> BingoFileParser::getAllFiles() {
