@@ -5,9 +5,13 @@
 #include <QTranslator>
 #include <QSysInfo>
 #include <QKeyEvent>
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
+    if(QSysInfo::productType().toStdString() == "windows") {
+        QApplication::setStyle(QStyleFactory::create("fusion"));
+    }
     QApplication a(argc, argv);
 
     if(QSysInfo::productType().toStdString() == "windows") {
