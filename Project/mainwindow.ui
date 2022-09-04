@@ -177,6 +177,58 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>581</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuUstawienia">
+    <property name="title">
+     <string>Ustawienia</string>
+    </property>
+    <widget class="QMenu" name="menuMotywy">
+     <property name="title">
+      <string>Motywy</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionSystemowy"/>
+     <addaction name="actionFusion_2"/>
+    </widget>
+    <addaction name="actionD_wi_ki"/>
+    <addaction name="menuMotywy"/>
+   </widget>
+   <addaction name="menuUstawienia"/>
+  </widget>
+  <action name="actionD_wi_ki">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dźwięki</string>
+   </property>
+  </action>
+  <action name="actionFusion">
+   <property name="text">
+    <string>Fusion</string>
+   </property>
+  </action>
+  <action name="actionSystemowy">
+   <property name="text">
+    <string>Systemowy</string>
+   </property>
+  </action>
+  <action name="actionFusion_2">
+   <property name="text">
+    <string>Fusion</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="QtResourceFile.qrc"/>
