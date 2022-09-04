@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 
 BingoFileParser bingoFileParser;
+bool MainWindow::sounds = true;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,5 +49,11 @@ void MainWindow::on_listView_bingos_clicked(const QModelIndex &index) {
     bingoDialog->setBingoFilePath("bingos/" + itemText.toStdString() + ".bgo");
     bingoDialog->onCreate();
     bingoDialog->show();
+}
+
+
+void MainWindow::on_actionD_wi_ki_triggered(bool checked)
+{
+    sounds = checked;
 }
 

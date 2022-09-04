@@ -1,6 +1,7 @@
 #include "bingo.h"
 #include "ui_bingo.h"
 #include "bingofileparser.h"
+#include "mainwindow.h"
 
 BingoFileParser bingoFileParse;
 
@@ -204,7 +205,7 @@ void Bingo::setBingoCountText(int bingoCount_) {
 }
 
 void Bingo::playAudio(int bingoCount_) {
-    if(bingoCount < bingoCount_) {
+    if(bingoCount < bingoCount_ && MainWindow::sounds) {
         if(player->playbackState() == QMediaPlayer::PlayingState)
             player->stop();
         player->play();

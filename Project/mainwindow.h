@@ -16,6 +16,7 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+    static bool sounds;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -24,6 +25,7 @@ public:
 private slots:
     void on_listView_bingos_clicked(const QModelIndex &index);
     void keyPressEvent(QKeyEvent* k);
+    void on_actionD_wi_ki_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
