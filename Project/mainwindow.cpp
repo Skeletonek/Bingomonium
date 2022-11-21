@@ -48,6 +48,7 @@ void MainWindow::on_listView_bingos_clicked(const QModelIndex &index) {
     bingoDialog = new Bingo(this);
     bingoDialog->setBingoFilePath("bingos/" + itemText.toStdString() + ".bgo");
     bingoDialog->onCreate();
+    bingoDialog->setAttribute(Qt::WA_DeleteOnClose);
     bingoDialog->show();
 }
 

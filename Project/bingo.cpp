@@ -2,6 +2,7 @@
 #include "ui_bingo.h"
 #include "bingofileparser.h"
 #include "mainwindow.h"
+#include <QCloseEvent>
 
 BingoFileParser bingoFileParse;
 
@@ -9,16 +10,20 @@ Bingo::Bingo(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Bingo) {
     ui->setupUi(this);
+    player = new QMediaPlayer();
+    audioOutput = new QAudioOutput();
 }
 
-Bingo::~Bingo() { delete ui; }
+Bingo::~Bingo() {
+    delete ui;
+    delete player;
+    delete audioOutput;
+}
 
 void Bingo::onCreate() {
     bingoFileParse.readFile(bingoFilePath);
     bingoValues = bingoFileParse.getValuesData();
     bingoCategories = bingoFileParse.getCategoriesData();
-    player = new QMediaPlayer();
-    audioOutput = new QAudioOutput();
 
     constructButtons();
     fillInCategoriesList();
