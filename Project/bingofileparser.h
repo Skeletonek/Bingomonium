@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QString>
+#include <QMessageBox>
 
 using namespace std;
 

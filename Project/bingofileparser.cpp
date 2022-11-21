@@ -24,8 +24,13 @@ void BingoFileParser::readFile(string filename) {
     QFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        cout << "File parser threw an unknown error while opening a file."
-                "Check if it's accessible for current logged in user.\n";
+        QMessageBox messageBox;
+        string text = "File parser threw an unknown error while opening a file.\n"
+                      "Check if it's accessible for current logged in user.\n";
+        cout << text;
+        messageBox.setText(QString::fromStdString(text));
+        messageBox.setIcon(QMessageBox::Critical);
+        messageBox.exec();
         return;
     }
 
@@ -41,6 +46,8 @@ void BingoFileParser::readFile(string filename) {
 }
 
 vector<string> BingoFileParser::getAllFiles() {
+    QMessageBox messageBox;
+    messageBox.setIcon(QMessageBox::Critical);
     vector<string> allFilesList;
     try {
         string path = "bingos";
@@ -48,10 +55,16 @@ vector<string> BingoFileParser::getAllFiles() {
             allFilesList.insert(allFilesList.end(), (entry.path().string()));
         }
     } catch (filesystem::filesystem_error) {
-        cout << "Filesystem Error caught. "
-                "Check if 'bingos' folder exist and is accessbile for current user.";
+        string text = "Filesystem Error caught.\n"
+                      "Check if 'bingos' folder exist and is accessbile for current user.\n";
+        cout << text;
+        messageBox.setText(QString::fromStdString(text));
+        messageBox.exec();
     } catch (exception) {
-        cout << "Unknown Exception caught";
+        string text = "Unknown Exception caught\n";
+        cout << text;
+        messageBox.setText(QString::fromStdString(text));
+        messageBox.exec();
     }
     return _convertToFriendlyFileNames(allFilesList);
 }

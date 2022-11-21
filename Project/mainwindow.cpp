@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
 
+    ui->setupUi(this);
     allBingos = bingoFileParser.getAllFiles();
     QStringListModel* model = new QStringListModel(this);
     for(string vectorString : allBingos) {
@@ -16,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
         list << text;
     }
     model->setStringList(list);
-    ui->setupUi(this);
     ui->listView_bingos->setModel(model);
 
     srand(time(0));
