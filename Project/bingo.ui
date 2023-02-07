@@ -381,6 +381,9 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check categories that should be included in bingo and click &amp;quot;Generate again&amp;quot; button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
    </property>
