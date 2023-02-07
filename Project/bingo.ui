@@ -424,13 +424,26 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>310</y>
+     <y>250</y>
      <width>211</width>
-     <height>31</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string>Generate again</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>330</y>
+     <width>211</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Chosen categories:</string>
    </property>
   </widget>
  </widget>

@@ -17,6 +17,7 @@ vector<string> BingoFileParser::getCategoriesData() { return categoriesData; }
 vector<string> BingoFileParser::getValuesData() { return valuesData; }
 
 void BingoFileParser::readFile(string filename) {
+    QMessageBox messageBox;
     unformattedData.clear();
     categoriesData.clear();
     valuesData.clear();
@@ -24,7 +25,7 @@ void BingoFileParser::readFile(string filename) {
     QFile file(QString::fromStdString(filename));
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QMessageBox messageBox;
+
         string text = "File parser threw an unknown error while opening a file.\n"
                       "Check if it's accessible for current logged in user.\n";
         cout << text;

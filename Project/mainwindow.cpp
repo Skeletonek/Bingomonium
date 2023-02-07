@@ -39,6 +39,9 @@ void MainWindow::keyPressEvent( QKeyEvent* event) {
                         QSysInfo::machineUniqueId() + "\n" +
                         QSysInfo::bootUniqueId() + "\n"
                         );
+            bingoFileEditor = new BingoFileEditor(this);
+            bingoFileEditor->setAttribute(Qt::WA_DeleteOnClose);
+            bingoFileEditor->show();
         break;
     }
 }

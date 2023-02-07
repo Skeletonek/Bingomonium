@@ -9,6 +9,7 @@
 
 #include <bingo.h>
 #include <bingofileparser.h>
+#include <bingofileeditor.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,7 +30,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Bingo *bingoDialog;
+    Bingo* bingoDialog;
+    BingoFileEditor* bingoFileEditor;
 
     vector<string> allBingos;
     QStringList list;
