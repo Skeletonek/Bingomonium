@@ -1,3 +1,9 @@
+# Bingomonium moved to GitLab
+### Due to unethical actions related to GitHub Copilot, this project has moved to [GitLab](https://gitlab.com/Skeletonek/Bingomonium).
+### You can still download releases or post issues here.
+
+---
+
 # Bingomonium
 Qt C++ application to create, manage and play your own bingos
 
